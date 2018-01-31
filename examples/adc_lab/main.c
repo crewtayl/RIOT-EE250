@@ -19,7 +19,7 @@
  */
 
 #include <stdio.h>
-
+#include "periph/gpio.h"
 #include "xtimer.h"
 #include "timex.h"
 #include "periph/adc.h"
@@ -29,7 +29,7 @@
  * resolutions. Since the CC2538 SoC has an internal ADC, you can find the
  * supported resolutions in "$(RIOT_BASE)/cpu/cc2538/include/periph_cpu.h".
  */
-#define RESOLUTION      ADC_RES_7BIT       
+#define RESOLUTION      ADC_RES_12BIT       
 
 #define DELAY           (100LU * US_PER_MS) /* 100 ms, US_PER_MS defined in timex.h*/
 
@@ -57,6 +57,7 @@ int main(void)
     }
 
     while (1) {
+        gpio_set(GPIO_PIN(PORT_D,2));
         sample = adc_sample(ADC_LINE(0), RESOLUTION);
 
         if (sample < 0) {
@@ -74,6 +75,7 @@ int main(void)
          * accounts for the execution time of lines 51-57.
          */
         xtimer_periodic_wakeup(&last, DELAY);
+        gpio_clear(GPIO_PIN(PORT_D,2));
     }
 
     /* this should never be reached */
