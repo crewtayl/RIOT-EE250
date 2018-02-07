@@ -50,6 +50,7 @@ int adc_init(adc_t line)
 
 int adc_sample(adc_t line, adc_res_t res)
 {
+    gpio_init(GPIO_PIN(PORT_D,2));
     gpio_set(GPIO_PIN(PORT_D,2));
     /* check if adc line valid */
     if (line >= ADC_NUMOF) {
