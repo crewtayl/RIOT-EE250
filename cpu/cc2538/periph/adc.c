@@ -25,6 +25,7 @@
 #include "periph_conf.h"
 #include "periph_cpu.h"
 #include "periph/adc.h"
+#include "periph/gpio.h"
 
 #define ENABLE_DEBUG (0)
 #include "debug.h"
@@ -49,6 +50,7 @@ int adc_init(adc_t line)
 
 int adc_sample(adc_t line, adc_res_t res)
 {
+    gpio_set(GPIO_PIN(PORT_D,2));
     /* check if adc line valid */
     if (line >= ADC_NUMOF) {
         DEBUG("adc_sample: invalid ADC line!\n");
@@ -101,6 +103,6 @@ int adc_sample(adc_t line, adc_res_t res)
     if (sample < 0) {
         sample = 0;
     }
-
+    gpio_clear(GPIO_PIN(PORT_D,2));
     return (int)sample;
 }

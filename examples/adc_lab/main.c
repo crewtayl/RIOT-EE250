@@ -57,7 +57,8 @@ int main(void)
     }
 
     while (1) {
-        gpio_set(GPIO_PIN(PORT_D,2));
+        
+        
         sample = adc_sample(ADC_LINE(0), RESOLUTION);
 
         if (sample < 0) {
@@ -75,7 +76,7 @@ int main(void)
          * accounts for the execution time of lines 51-57.
          */
         xtimer_periodic_wakeup(&last, DELAY);
-        gpio_clear(GPIO_PIN(PORT_D,2));
+        
     }
 
     /* this should never be reached */
